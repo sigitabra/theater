@@ -52,6 +52,7 @@ public class ScheduledPlayService {
         scheduledPlay.setDate(scheduledPlayIn.getDate());
         scheduledPlay.setTime(scheduledPlayIn.getTime());
         scheduledPlay.setTotalSeats(scheduledPlayIn.getTotalSeats());
+        scheduledPlay.setTotalReservedSeats(0);
         scheduledPlay.setReservations(new ArrayList<>());
         log.info("END | addScheduledPlay | ScheduledPlay added: {}", scheduledPlay);
         return scheduledPlayRepository.saveAndFlush(scheduledPlay);

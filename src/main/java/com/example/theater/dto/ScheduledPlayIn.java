@@ -13,20 +13,20 @@ import java.sql.Time;
 @Data
 public class ScheduledPlayIn {
 
-    @NotNull
+    @NotNull(message = "{validation.constraints.not.null.message}")
     private Long theaterPlayId;
 
     @NotBlank(message = "{validation.constraints.not.empty.message}")
     @Size(min = 1, max = 100, message = "{validation.constraints.size.message}")
     private String address;
 
-    @NotNull
+    @NotNull(message = "{validation.constraints.not.null.message}")
     @Future(message = "{validation.constraints.future.message}")
     private Date date;
 
-    @NotNull
+    @NotNull(message = "{validation.constraints.not.null.message}")
     private Time time;
 
-    @NotNull
+    @NotNull(message = "{validation.constraints.not.null.message}")
     private int totalSeats;
 }
