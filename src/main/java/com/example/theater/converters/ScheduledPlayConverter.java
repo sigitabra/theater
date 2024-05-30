@@ -29,10 +29,12 @@ public class ScheduledPlayConverter {
 
 
     public static ScheduledPlayFullOut convertEntityToScheduledPlayFullOut(ScheduledPlay scheduledPlay) {
-        final ScheduledPlayFullOut scheduledPlayFullOut = new ScheduledPlayFullOut(
+        if (scheduledPlay == null) {
+            return null;
+        }
+        return new ScheduledPlayFullOut(
                 convertEntityToScheduledPlayOut(scheduledPlay),
                 ReservationConverter.convertEntityListToReservationOutList(scheduledPlay.getReservations()));
-        return scheduledPlayFullOut;
     }
 
 

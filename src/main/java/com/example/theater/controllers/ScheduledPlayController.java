@@ -129,7 +129,22 @@ public class ScheduledPlayController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                  .body(new ValidationError(bindingResult.getFieldErrors()));
         }
+
+        ScheduledPlay scheduledPlay = scheduledPlayService.getScheduledPlayById(id);
+
+        if (scheduledPlay == null) {
+            log.info("ScheduledPlay with id {} not found", id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        int availableSeats=scheduledPlay.getTotalSeats()-scheduledPlay.getTotalReservedSeats();
+
+        if (availableSeats-reservationIn.getReservedSeats()<0) {
+            log.info("Reservation of {} is not available. Only {} seats left", reservationIn.getReservedSeats(), availableSeats);
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+        }
+
         Reservation reservation = scheduledPlayService.addReservationToScheduledPlay(id, reservationIn);
+
         log.debug("Added reservation: {}", reservation);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(ReservationConverter.convertEntityToReservationOut(reservation));

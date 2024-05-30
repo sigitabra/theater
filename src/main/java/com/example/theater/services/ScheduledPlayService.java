@@ -92,13 +92,9 @@ public class ScheduledPlayService {
 
 
     public Reservation addReservationToScheduledPlay(Long scheduledPlayId, ReservationIn reservationIn) {
-        log.info("START | addReservation");
+        log.info("START | addReservationToScheduledPlay");
 
         ScheduledPlay scheduledPlay = getScheduledPlayById(scheduledPlayId);
-
-        if (scheduledPlay == null) {
-            return null;
-        }
 
         Reservation reservation = new Reservation();
         reservation.setScheduledPlay(scheduledPlay);
@@ -111,7 +107,7 @@ public class ScheduledPlayService {
         scheduledPlay.setTotalReservedSeats(scheduledPlay.getTotalReservedSeats() + reservationIn.getReservedSeats());
         scheduledPlayRepository.saveAndFlush(scheduledPlay);
 
-        log.info("END | addReservation | Reservation added: {}", reservation);
+        log.info("END | addReservationToScheduledPlay | Reservation added: {}", reservation);
         return reservation;
     }
 
