@@ -1,6 +1,8 @@
 package com.example.theater.services;
 
 import com.example.theater.dto.TheaterPlayIn;
+import com.example.theater.entities.Reservation;
+import com.example.theater.entities.ScheduledPlay;
 import com.example.theater.entities.TheaterPlay;
 import com.example.theater.repositories.TheaterPlayRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,8 @@ import java.util.List;
 public class TheaterPlayService {
 
     private final TheaterPlayRepository theaterPlayRepository;
+
+    private final ScheduledPlayService scheduledPlayService;
 
     public List<TheaterPlay> getAllPlays() {
         log.info("START | getAllPlays");
@@ -65,9 +69,9 @@ public class TheaterPlayService {
 
 
     public void deleteTheaterPlayById(Long theaterPlayId) {
-        log.info("START | deleteTheaterPlay");
+        log.info("START | deleteTheaterPlayById");
         theaterPlayRepository.deleteById(theaterPlayId);
-        log.info("END | deleteTheaterPlay | Deleted theaterPLay with id {}", theaterPlayId);
+        log.info("END | deleteTheaterPlayById | Deleted theaterPLay with id {}", theaterPlayId);
     }
 
 }
