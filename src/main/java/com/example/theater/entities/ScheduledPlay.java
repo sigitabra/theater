@@ -27,8 +27,7 @@ public class ScheduledPlay {
     @JoinColumn(nullable = false)
     private TheaterPlay theaterPlay;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "scheduled_play_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "scheduledPlay")
     private List<Reservation> reservations;
 
     @Column(nullable = false, length = 100)

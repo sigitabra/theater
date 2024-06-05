@@ -48,21 +48,21 @@ public class TheaterPlayController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<TheaterPlayOut> getTheaterPlayById(@PathVariable Long id) {
         log.info("Request getTheaterPlayById received");
-       TheaterPlay theaterPlay = theaterPlayService.getPlayById(id);
+        TheaterPlay theaterPlay = theaterPlayService.getPlayById(id);
         if (theaterPlay == null) {
             log.info("getTheaterPlayById NOT FOUND");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         log.info("Found theaterPlay with id {}", theaterPlay.getId());
         return ResponseEntity.status(HttpStatus.OK)
-                             .body(TheaterPlayConverter.convertEntityToTheaterPlayOut(theaterPlay));
+                             .body(TheaterPlayConverter.convertEntityToTheaterPlayFullOut(theaterPlay));
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'COORDINATOR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Object> addTheaterPlay(@Valid @RequestBody TheaterPlayIn theaterPlayIn,
-                                              BindingResult bindingResult) {
+                                                 BindingResult bindingResult) {
         log.info("Request addTheaterPlay received");
         log.debug("theaterPlayIn: {}", theaterPlayIn);
         if (bindingResult.hasErrors()) {
@@ -77,10 +77,10 @@ public class TheaterPlayController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'COORDINATOR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PatchMapping(value = "/{id}")
     public ResponseEntity<TheaterPlayOut> updateTheaterPlayById(@PathVariable Long id,
-                                                     @RequestBody TheaterPlayIn theaterPlayIn) {
+                                                                @RequestBody TheaterPlayIn theaterPlayIn) {
         log.info("Request updateTheaterPlayById received");
         log.debug("Updating with theaterPlayIn for update: {}", theaterPlayIn);
 

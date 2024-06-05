@@ -9,6 +9,7 @@ import com.example.theater.dto.ScheduledPlayOut;
 import com.example.theater.entities.Reservation;
 import com.example.theater.entities.ScheduledPlay;
 import com.example.theater.services.ScheduledPlayService;
+import com.example.theater.services.TheaterPlayService;
 import com.example.theater.validations.ValidationError;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ import java.util.List;
 public class ScheduledPlayController {
 
     private final ScheduledPlayService scheduledPlayService;
+    private final TheaterPlayService theaterPlayService;
 
     @GetMapping
     public ResponseEntity<List<ScheduledPlayOut>> getScheduledPlays() {
@@ -59,8 +61,11 @@ public class ScheduledPlayController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                  .body(new ValidationError(bindingResult.getFieldErrors()));
         }
+        ScheduledPlay scheduledPlay = ScheduledPlayConverter.convertScheduledPlayInToEntity(scheduledPlayIn);
+        scheduledPlay.setTheaterPlay(theaterPlayService.getPlayById(scheduledPlayIn.getTheaterPlayId()));
+
         ScheduledPlayOut scheduledPlayOut = ScheduledPlayConverter.convertEntityToScheduledPlayOut(
-                scheduledPlayService.addScheduledPlay(scheduledPlayIn));
+                scheduledPlayService.addScheduledPlay(scheduledPlay));
         log.debug("Added scheduled play: {}", scheduledPlayOut);
         return ResponseEntity.status(HttpStatus.CREATED).body(scheduledPlayOut);
     }
@@ -136,10 +141,11 @@ public class ScheduledPlayController {
             log.info("ScheduledPlay with id {} not found", id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        int availableSeats=scheduledPlay.getTotalSeats()-scheduledPlay.getTotalReservedSeats();
+        int availableSeats = scheduledPlay.getTotalSeats() - scheduledPlay.getTotalReservedSeats();
 
-        if (availableSeats-reservationIn.getReservedSeats()<0) {
-            log.info("Reservation of {} is not available. Only {} seats left", reservationIn.getReservedSeats(), availableSeats);
+        if (availableSeats - reservationIn.getReservedSeats() < 0) {
+            log.info("Reservation of {} is not available. Only {} seats left", reservationIn.getReservedSeats(),
+                    availableSeats);
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         }
 

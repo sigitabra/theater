@@ -2,6 +2,7 @@ package com.example.theater.services;
 
 import com.example.theater.entities.Reservation;
 import com.example.theater.repositories.ReservationRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,18 +31,11 @@ public class ReservationService {
         reservationRepository.saveAndFlush(reservation);
     }
 
-
+    @Transactional
     public void deleteReservationById(Long reservationId) {
-        log.info("deleteReservation {}", reservationId);
-
+        log.info("START | deleteReservationById");
         reservationRepository.deleteById(reservationId);
+        log.info("END | deleteTheaterPlayById | Deleted Reservation with id {}", reservationId);
     }
-
-
-    public void deleteReservationsByScheduledPlayId(Long scheduledPlayId) {
-        log.info("deleteReservationByScheduledPlayId {}", scheduledPlayId);
-        reservationRepository.deleteReservationsByScheduledPlayId(scheduledPlayId);
-    }
-
 
 }
