@@ -22,8 +22,7 @@ public class TheaterPlay {
     @Column(nullable = false)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "theater_play_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "theaterPlay")
     private List<ScheduledPlay> scheduledPlays;
 
     @Column(nullable = false, length = 100)

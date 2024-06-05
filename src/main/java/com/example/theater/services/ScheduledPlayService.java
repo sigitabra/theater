@@ -72,8 +72,8 @@ public class ScheduledPlayService {
     }
 
 
+    @Transactional
     public void deleteScheduledPlayById(Long scheduledPlayId) {
-        reservationService.deleteReservationsByScheduledPlayId(scheduledPlayId);
         log.info("START | deleteScheduledPlayById");
         scheduledPlayRepository.deleteById(scheduledPlayId);
         log.info("END | deleteScheduledPlayById | Deleted scheduled play with id {}", scheduledPlayId);
