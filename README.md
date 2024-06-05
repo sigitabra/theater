@@ -1,30 +1,42 @@
 # Theater reservations
 
-Application aims to manage seats availability for theater theaterPlays.
+Application aims to manage seats availability for a scheduled play.
 
-For this any user with "COORDINATOR" or "ADMIN" role should be allowed to create theaterPlays and schedule time for them
-by defining the limit of available seats and other relevant information (i.e. address, date and time).
+Theater employees have option to add new theater play, schedule it, i.e. announce the date, time and address when the
+play will be shown and define the limit of available seats. Before the event it's possible to get the list of
+reservations. Then event is ended it's possible to delete scheduled play with all related reservations to ensure GDPR
+compliance.
 
-Any public person should be able to register up to 3 seats per reservation.
+Theater play viewers can make up to 3 seats reservation per time with possibility to cancel, i.e. delete a single
+reservation.
+In the reservation request it's mandatory to add name, valid email and number of seats reserved.
 
-Once theaterPlay is completed any user with "COORDINATOR" or "ADMIN"  should be able to delete scheduled theaterPlay
-with all related reservations, to manage GDPR concerns.
-
-##  Use cases
+## Use cases
 
 * Get theater play details by ID (public endpoint for all users)
 * Get list of all theater plays (public endpoint for all users)
-* Add new theater play (available only with "COORDINATOR" or "ADMIN" roles)
-* Delete theater play by ID (can be done only by ADMIN user)
-* Update theater play by ID (available only with "COORDINATOR" or "ADMIN" roles)
-* Add new scheduled play (available only with "COORDINATOR" or "ADMIN" roles)
+* Add new theater play (can be done only by user with "ADMIN" role)
+* Delete theater play by ID (can be done only by user with "ADMIN" role)
+* Update theater play by ID (can be done only by user with "ADMIN" role)
+* Add new scheduled play (can be done only by users with "COORDINATOR" or "ADMIN" roles)
 * Get all available scheduled plays (public endpoint for all users)
-* Update scheduled play by ID (available only with "COORDINATOR" or "ADMIN" roles, only if any of the key parameters have changed)
-* Delete scheduled play by ID with all related reservations (available only with "COORDINATOR" or "ADMIN" roles, then
-  play is already past, no need to save user data due to GDPR)
-* Get list of reservations by scheduled play ID (available only with "COORDINATOR" or "ADMIN" roles)
+* Update scheduled play by ID (can be done only by users with "COORDINATOR" or "ADMIN" roles)
+* Delete scheduled play by ID with all related reservations (can be done only by users with "COORDINATOR" or "ADMIN"
+  roles
+* Get list of reservations by scheduled play ID (can be done only by users with "COORDINATOR" or "ADMIN" roles)
 * Add a reservation to the reservations' list of scheduled play (public endpoint for users to register)
+* Get details of reservation by id (public endpoint for users to check their personal reservation)
 * Delete reservation by id and by scheduled play id (public endpoint for users to cancel personal reservation)
+
+
+## Available endpoints
+
+http://localhost:8090/swagger-ui/index.html
+
+## Database schema
+
+![DBSchema.png](src/main/resources/DBSchema.png)
+
 
 
 

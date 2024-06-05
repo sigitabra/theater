@@ -21,7 +21,6 @@ public class AuthConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                    .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                           .requestMatchers("/reservations/**").permitAll()
                            .requestMatchers("**").permitAll()
                            .anyRequest().authenticated()
                    )
@@ -32,13 +31,13 @@ public class AuthConfig {
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails admin = User
-                .withUsername("admin")
+                .withUsername("User_admin")
                 .password(passwordEncoder().encode("admin123"))
                 .roles("ADMIN")
                 .build();
 
         UserDetails coordinator = User
-                .withUsername("sigita")
+                .withUsername("User_Sigita")
                 .password(passwordEncoder().encode("sigita123"))
                 .roles("COORDINATOR")
                 .build();
