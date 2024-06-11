@@ -73,7 +73,7 @@ public class ScheduledPlayController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'COORDINATOR')")
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<Object> updateScheduledPlayById(@PathVariable Long id,
+    public ResponseEntity<ScheduledPlayOut> updateScheduledPlayById(@PathVariable Long id,
                                                           @RequestBody ScheduledPlayIn scheduledPlayIn) {
         log.info("Request updateScheduledPlayById received");
         log.debug("Updating with scheduledPlayIn for update: {}", scheduledPlayIn);
@@ -81,10 +81,15 @@ public class ScheduledPlayController {
         if (scheduledPlayIn.getAddress() == null && scheduledPlayIn.getDate() == null &&
                 scheduledPlayIn.getTime() == null && scheduledPlayIn.getTotalSeats() == 0) {
             log.warn("Validation error for PATCH updateScheduledPlayById");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No content found for the update");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        ScheduledPlayOut scheduledPlayOut = ScheduledPlayConverter.convertEntityToScheduledPlayOut(
-                scheduledPlayService.updateScheduledPlay(id, scheduledPlayIn));
+        ScheduledPlay scheduledPlay = scheduledPlayService.updateScheduledPlay(id, scheduledPlayIn);
+
+        if (scheduledPlay == null) {
+            log.info("updateScheduledPlayById NOT FOUND");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        ScheduledPlayOut scheduledPlayOut = ScheduledPlayConverter.convertEntityToScheduledPlayOut(scheduledPlay);
         log.debug("Updated scheduled play: {}", scheduledPlayOut);
         return ResponseEntity.status(HttpStatus.OK).body(scheduledPlayOut);
     }
