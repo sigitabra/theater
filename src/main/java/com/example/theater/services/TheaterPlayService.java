@@ -1,8 +1,6 @@
 package com.example.theater.services;
 
 import com.example.theater.dto.TheaterPlayIn;
-import com.example.theater.entities.Reservation;
-import com.example.theater.entities.ScheduledPlay;
 import com.example.theater.entities.TheaterPlay;
 import com.example.theater.repositories.TheaterPlayRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +15,6 @@ import java.util.List;
 public class TheaterPlayService {
 
     private final TheaterPlayRepository theaterPlayRepository;
-
-    private final ScheduledPlayService scheduledPlayService;
 
     public List<TheaterPlay> getAllPlays() {
         log.info("START | getAllPlays");

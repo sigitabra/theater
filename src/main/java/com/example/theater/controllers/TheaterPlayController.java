@@ -88,8 +88,13 @@ public class TheaterPlayController {
             log.warn("Validation error for PATCH updateTheaterPlayById");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        TheaterPlayOut theaterPlayOut = TheaterPlayConverter.convertEntityToTheaterPlayOut(
-                theaterPlayService.updateTheaterPlay(id, theaterPlayIn));
+        TheaterPlay theaterPlay = theaterPlayService.updateTheaterPlay(id, theaterPlayIn);
+
+        if (theaterPlay == null) {
+            log.info("updateTheaterPlayById NOT FOUND");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        TheaterPlayOut theaterPlayOut = TheaterPlayConverter.convertEntityToTheaterPlayOut(theaterPlay);
         log.debug("Updated play: {}", theaterPlayOut);
         return ResponseEntity.status(HttpStatus.OK).body(theaterPlayOut);
     }
