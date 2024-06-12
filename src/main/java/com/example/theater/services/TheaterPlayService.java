@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -31,6 +33,17 @@ public class TheaterPlayService {
             log.info("END | getPlayById | No theaterPlay found with id {}", id);
         } else {
             log.info("END | getPlayById | Returning theaterPlay {}", theaterPlay);
+        }
+        return theaterPlay;
+    }
+
+    public TheaterPlay getPlayByName(String name) {
+        log.info("START | getPlayByName | Getting theaterPlay by name {}", name);
+        TheaterPlay theaterPlay = theaterPlayRepository.findByTitle(name);
+        if (theaterPlay == null) {
+            log.info("END | getPlayByName | No theaterPlay found with name {}", name);
+        } else {
+            log.info("END | getPlayByName | Returning theaterPlay {}", theaterPlay);
         }
         return theaterPlay;
     }

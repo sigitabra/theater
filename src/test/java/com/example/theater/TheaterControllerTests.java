@@ -2,8 +2,6 @@ package com.example.theater;
 
 import com.example.theater.dto.TheaterPlayIn;
 import com.example.theater.entities.TheaterPlay;
-import com.example.theater.services.ReservationService;
-import com.example.theater.services.ScheduledPlayService;
 import com.example.theater.services.TheaterPlayService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

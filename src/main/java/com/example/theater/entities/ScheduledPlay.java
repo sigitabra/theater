@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -63,5 +64,18 @@ public class ScheduledPlay {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ScheduledPlay that)) return false;
+        return Objects.equals(theaterPlay, that.theaterPlay) && Objects.equals(date.toString(),
+                that.date.toString()) && Objects.equals(time, that.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(theaterPlay, date, time);
     }
 }
