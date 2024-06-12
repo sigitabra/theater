@@ -4,6 +4,7 @@ import com.example.theater.dto.ReservationIn;
 import com.example.theater.dto.ScheduledPlayIn;
 import com.example.theater.entities.Reservation;
 import com.example.theater.entities.ScheduledPlay;
+import com.example.theater.entities.TheaterPlay;
 import com.example.theater.repositories.ScheduledPlayRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,31 @@ public class ScheduledPlayService {
             log.info("END | getScheduledPlayById | Found scheduled play with id {}", id);
         }
         return scheduledPlay;
+    }
+
+    public List<ScheduledPlay> getScheduledPlaysByTheaterPlay(TheaterPlay theaterPlay) {
+        log.info("START | getScheduledPlayByTheaterPlay | TheaterPlay={}", theaterPlay);
+        List<ScheduledPlay> scheduledPlays = scheduledPlayRepository.findByTheaterPlay(theaterPlay);
+        if (scheduledPlays == null || scheduledPlays.isEmpty()) {
+            log.info("END | getScheduledPlayByTheaterPlay | No scheduled play found with theater play {}",
+                    theaterPlay.getTitle());
+        } else {
+            log.info("END | getScheduledPlayByTheaterPlay | Found scheduled play with theater play {}",
+                    theaterPlay.getTitle());
+        }
+        return scheduledPlays;
+    }
+
+    public boolean checkIfExist(ScheduledPlay scheduledPlay, List<ScheduledPlay> scheduledPlays) {
+        log.info("START | checkIfExist | ScheduledPlay={}", scheduledPlay);
+        for (ScheduledPlay sp : scheduledPlays) {
+            if (sp.equals(scheduledPlay)) {
+                log.info("END | checkIfExist | true");
+                return true;
+            }
+        }
+        log.info("END | checkIfExist | false");
+        return false;
     }
 
 

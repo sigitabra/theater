@@ -15,7 +15,7 @@ public class TheaterPlayIn {
     @Size(min = 1, max = 100, message = "{validation.constraints.size.message}")
     @Pattern(regexp = "^[^\\s].*$", message = "{validation.constraints.start.with.space.message}")
     @Pattern(regexp = "^.*[^\\s]$", message = "{validation.constraints.end.with.space.message}")
-    @Pattern(regexp = "^((?!  ).)*$", message = "{validation.constraints.consecutive.space.message}")
+    @Pattern(regexp = "^((?! {2}).)*$", message = "{validation.constraints.consecutive.space.message}")
     private String title;
 
     @NotNull(message = "{validation.constraints.not.null.message}")

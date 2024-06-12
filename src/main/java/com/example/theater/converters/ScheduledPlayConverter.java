@@ -26,7 +26,9 @@ public class ScheduledPlayConverter {
             scheduledPlayOut.setAddress(scheduledPlay.getAddress());
             scheduledPlayOut.setDate(scheduledPlay.getDate());
             scheduledPlayOut.setTime(scheduledPlay.getTime());
-            scheduledPlayOut.setAvailableSeats(scheduledPlay.getTotalSeats() - scheduledPlay.getTotalReservedSeats());
+
+            int availableSeats=scheduledPlay.getTotalSeats() - scheduledPlay.getTotalReservedSeats();
+            scheduledPlayOut.setAvailableSeats(Math.max(availableSeats, 0));
         }
         log.debug("END: convertEntityToScheduledPlayOut {}", scheduledPlayOut);
         return scheduledPlayOut;
