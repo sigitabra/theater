@@ -4,6 +4,7 @@ import com.example.theater.converters.ReservationConverter;
 import com.example.theater.dto.ReservationOut;
 import com.example.theater.entities.Reservation;
 import com.example.theater.services.ReservationService;
+import com.example.theater.services.ScheduledPlayService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class ReservationController {
 
     private final ReservationService reservationService;
+    private final ScheduledPlayService scheduledPlayService;
 
     @Operation(summary = "Get reservation details by id", description = "No authentication is required")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(hidden = true)))
@@ -47,11 +49,13 @@ public class ReservationController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteReservationById(@PathVariable Long id) {
         log.info("Request deleteReservationById received");
-        if (reservationService.getReservationById(id) == null) {
+        Reservation reservation = reservationService.getReservationById(id);
+        if (reservation == null) {
             log.info("Reservation with id {} not found", id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         try {
+            scheduledPlayService.removeReservedSeats(reservation.getScheduledPlay(),reservation.getReservedSeats());
             reservationService.deleteReservationById(id);
         } catch (Exception e) {
             log.error("Error while deleting reservation with id {}", id, e);
