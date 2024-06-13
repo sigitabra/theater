@@ -126,14 +126,13 @@ public class ScheduledPlayService {
         return reservation;
     }
 
-    public ScheduledPlay removeReservedSeats(ScheduledPlay scheduledPlay, int removedReservedSeats) {
+    public void removeReservedSeats(ScheduledPlay scheduledPlay, int removedReservedSeats) {
         log.info("START | removeReservedSeats");
         scheduledPlay.setTotalReservedSeats(scheduledPlay.getTotalReservedSeats() - removedReservedSeats);
 
         scheduledPlayRepository.saveAndFlush(scheduledPlay);
 
         log.info("END | removeReservedSeats | Total reserved seats: {}", scheduledPlay.getTotalReservedSeats());
-        return scheduledPlay;
     }
 
 }

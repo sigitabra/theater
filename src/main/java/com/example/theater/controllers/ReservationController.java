@@ -55,7 +55,7 @@ public class ReservationController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         try {
-            scheduledPlayService.removeReservedSeats(reservation.getScheduledPlay(),reservation.getReservedSeats());
+            scheduledPlayService.removeReservedSeats(reservation.getScheduledPlay(), reservation.getReservedSeats());
             reservationService.deleteReservationById(id);
         } catch (Exception e) {
             log.error("Error while deleting reservation with id {}", id, e);
